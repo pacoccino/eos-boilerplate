@@ -17,4 +17,4 @@ yarn cleos create account eosio "$SPITFIRE_ACCOUNT" "$SPITFIRE_PUB" "$SPITFIRE_P
 yarn contract:deploy spitfire "$SPITFIRE_ACCOUNT"
 
 yarn cleos push action eosio.token create '{"issuer":"eosio", "maximum_supply":"1000000000.0000 '"$TOKEN_SYMBOL"'"}' -p eosio.token@active
-yarn cleos push action eosio.token issue '[ "'"$SPITFIRE_ACCOUNT"'", "1000000000.0000 '"$TOKEN_SYMBOL"'" ]' -p eosio
+yarn cleos push action eosio.token issue '[ "'"$SPITFIRE_ACCOUNT"'", "1000000000.0000 '"$TOKEN_SYMBOL"'", "" ]' -p eosio

@@ -1,20 +1,20 @@
 #include "spitfire.hpp"
 
-void spitfire::createad(account_name user, uint32_t product_id, eosio::asset reward) {
+ACTION spitfire::createad(name user, uint32_t product_id, eosio::asset reward) {
 
     require_auth( _self );
     require_recipient( user );
 
-    ads_table ads( _self, user );
+    //ads_table ads( _self, user );
 
-    profiles_table profiles( _self, _self );
-    auto existing_profile = profiles.find( user );
-    eosio_assert( existing_profile != profiles.end(), "profile doesnt exist" );
+    auto existing_profile = _profiles.find( user.value );
+    eosio_assert( existing_profile != _profiles.end(), "profile doesnt exist" );
+
     const auto& prof = *existing_profile;
     eosio_assert( prof.notif == true, "profile doesnt accept notifications" );
 
-    ads.emplace( _self, [&]( auto& rcrd ) {
-        rcrd.key         = ads.available_primary_key();
+    _ads.emplace( _self, [&]( auto& rcrd ) {
+        rcrd.key         = _ads.available_primary_key();
         rcrd.user        = user;
         rcrd.product_id  = product_id;
         rcrd.reward      = reward;
@@ -24,35 +24,32 @@ void spitfire::createad(account_name user, uint32_t product_id, eosio::asset rew
    //INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {{_self,N(eosio.code)}}, {_self, user, reward, std::string("")} );
 }
 
-void spitfire::addkw(account_name user, std::string kw) {
+ACTION spitfire::addkw(name user, std::string kw) {
 
     require_auth( user );
 
-    kws_table kws( _self, user );
-
-    kws.emplace( _self, [&]( auto& rcrd ) {
-       rcrd.key   = kws.available_primary_key();
+    _kws.emplace( _self, [&]( auto& rcrd ) {
+       rcrd.key   = _kws.available_primary_key();
        rcrd.kw    = kw;
     });
 
 }
 
-void spitfire::setprofile(account_name user, bool notif) {
+ACTION spitfire::setprofile(name user, bool notif) {
 
     require_auth( user );
 
-    profiles_table profiles( _self, _self );
-    auto existing_profile = profiles.find( user );
+    auto existing_profile = _profiles.find( user.value );
 
-    if(existing_profile != profiles.end()) {
+    if(existing_profile != _profiles.end()) {
 
-      profiles.modify( existing_profile, 0, [&]( auto& rcrd ) {
+      _profiles.modify( existing_profile, _self, [&]( auto& rcrd ) {
          rcrd.notif     = notif;
       });
 
     } else {
 
-      profiles.emplace( _self, [&]( auto& rcrd ) {
+      _profiles.emplace( _self, [&]( auto& rcrd ) {
          rcrd.user      = user;
          rcrd.notif     = notif;
       });
@@ -61,4 +58,4 @@ void spitfire::setprofile(account_name user, bool notif) {
 
 }
 
-EOSIO_ABI( spitfire, (createad)(addkw)(setprofile) )
+EOSIO_DISPATCH( spitfire, (createad)(addkw)(setprofile) )
