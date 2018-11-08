@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+
+  nodeos:
+    image: eosio/eos-dev:v1.2.5
+    ports:
+      - 8888:8888
+      - 9876:9876
+    expose:
+      - 8888
+    volumes:
+      - ./eos/data:/mnt/dev/data
+      - ./eos/config:/mnt/dev/config
+      - ./eos/contracts:/opt/eosio/bin/contracts
+    working_dir: /opt/eosio/bin
+    cap_add:
+      - IPC_LOCK
+    stop_grace_period: 10m
+    command: nodeos -e -p eosio --config-dir /mnt/dev/config --data-dir /mnt/dev/data
+    #command: nodeos -e -p eosio --config-dir /mnt/dev/config --data-dir /mnt/dev/data --hard-replay-blockchain
+
+  keosd:
+    image: eosio/eos-dev:v1.2.5
+    ports:
+      - 8900:8900
+    volumes:
+      - ./eos/wallets:/mnt/dev/wallets
+    stop_grace_period: 10m
+    command: keosd --wallet-dir /mnt/dev/wallets --http-server-address=0.0.0.0:8900 --http-validate-host=false
+
+  cleos:
+    image: eosio/eos-dev:v1.2.5
+    volumes:
+      - ./eos/contracts:/opt/eosio/bin/contracts
+    entrypoint: cleos --url http://nodeos:8888 --wallet-url http://keosd:8900

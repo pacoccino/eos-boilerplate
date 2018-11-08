@@ -1,0 +1,19 @@
+node_modules
+
+# Blockchain nodes data
+
+/eos/data
+/eos/wallets
+
+keys.txt
+
+# system
+
+.idea
+.DS_Store
+
+*.wast
+*.wasm
+*.abi
+
+.env
