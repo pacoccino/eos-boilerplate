@@ -1,9 +1,11 @@
-const { Api, JsonRpc, RpcError, JsSignatureProvider } = require('eosjs');
-const fetch = require('node-fetch');                            // node only; not needed in browsers
-const { EOS_ENDPOINT, EOS_PKS } = require('../config');
-const { TextDecoder, TextEncoder } = require('text-encoding');
-const rpc = new JsonRpc(EOS_ENDPOINT, { fetch });
+const { Api, JsonRpc, JsSignatureProvider } = require('eosjs');
+const fetch = require('node-fetch');
 const {Keygen} = require('eosjs-keygen');
+const { TextDecoder, TextEncoder } = require('text-encoding');
+
+const { EOS_ENDPOINT, EOS_PKS } = require('../config');
+
+const rpc = new JsonRpc(EOS_ENDPOINT, { fetch });
 
 function getApi(privateKeys) {
 
