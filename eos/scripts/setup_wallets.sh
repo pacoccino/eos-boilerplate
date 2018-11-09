@@ -13,8 +13,18 @@ echo "\n" >> $FILE
 
 echo "Default account" >> $FILE
 yarn cleos wallet create -n default --to-console >> $FILE
+
+# Create alice account
 yarn cleos wallet import -n default --private-key 5Kcu8cbdyjTXD5e1QsRLmX6JYqGMC9mSRsFgDwKPk48j4MmPyBW
 yarn cleos create account eosio alice EOS7yHr8Hd55v4GVs6QTMrAiK3x1g89sMRMgkxvTw4TrrSzExmTdv EOS7yHr8Hd55v4GVs6QTMrAiK3x1g89sMRMgkxvTw4TrrSzExmTdv
+
+# Create bob account
+yarn cleos wallet import -n default --private-key 5JofWdxYbzV6ipNmEdiaZibVxg9GYMLAFiKEWiYSuz3YEEHJHbb
+yarn cleos create account eosio bob EOS8Ke736LWfLfXdw4vFVYGG3Hf5iVDJhdPherwA7P9nuxdKaUfz7 EOS8Ke736LWfLfXdw4vFVYGG3Hf5iVDJhdPherwA7P9nuxdKaUfz7
+
+# Create charly account
+yarn cleos wallet import -n default --private-key 5KTFEy1p9fSAbm1dJaMh5Nd3tDMKtY5k93uYNXxisyKi9RZCJgx
+yarn cleos create account eosio charly EOS6EeXqdYC7jmuATwjfY5Lx1RpAYc533xGispe391s1ZTJGa4Bzt EOS6EeXqdYC7jmuATwjfY5Lx1RpAYc533xGispe391s1ZTJGa4Bzt
 
 yarn account:create eosio.token
 yarn cleos set contract eosio.token /contracts/eosio.token -p eosio.token

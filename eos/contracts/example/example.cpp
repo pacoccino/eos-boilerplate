@@ -43,11 +43,38 @@ ACTION example::addskill(name user, std::string skill) {
     auto existing_profile = _profiles.find( user.value );
     eosio_assert( existing_profile != _profiles.end(), "profile doesnt exist" );
 
-    skills.emplace( _self, [&]( auto& rcrd ) {
-        rcrd.key    = skills.available_primary_key();
-        rcrd.skill  = skill;
-    });
+    bool exist = false;
+    for ( auto itr = skills.begin(); itr != skills.end(); itr++ ) {
+        if(skill.compare(itr->skill) == 0) {
+            exist = true;
+            break;
+        }
+    }
+    if(!exist) {
+
+        skills.emplace( _self, [&]( auto& rcrd ) {
+            rcrd.key    = skills.available_primary_key();
+            rcrd.skill  = skill;
+        });
+
+    }
+}
+
+/*
+Remove a user.
+    Only contract owner can do this.
+*/
+/*
+ACTION example::rmprofile(name user) {
+
+    require_auth( _self );
+    require_recipient( user ); // is_account ??
+
+    // TODO
 
 }
 
+transfer token
+
+*/
 EOSIO_DISPATCH( example, (setprofile)(addskill) )

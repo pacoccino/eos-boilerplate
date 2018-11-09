@@ -19,8 +19,8 @@ class Contract_Example {
             code: this.contractAccount.account_name,   // contract who owns the table
             scope: this.contractAccount.account_name,  // scope of the table
             table: 'profiles',    // name of the table as specified by the contract abi
-            table_key: account_name,   // name of the table as specified by the contract abi
-            limit: 100,
+            lower_bound: account_name,
+            limit: 1,
         });
 
         return resp.rows[0];
@@ -55,6 +55,60 @@ class Contract_Example {
 
     }
 
+    async addSkill(account, skill) {
+
+        const contractName = this.contractAccount.account_name;
+        const userName = account.account_name;
+
+        const api = Eos.getApi([account.privateKey]);
+
+        await api.transact({
+            actions: [{
+                account: contractName,
+                name: 'addskill',
+                authorization: [{
+                    actor: userName,
+                    permission: 'active',
+                }],
+                data: {
+                    user: account.account_name,
+                    skill,
+                },
+            }]
+        }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+        });
+
+    }
+
+    async getSkill(account_name, key) {
+
+        const resp = await Eos.rpc.get_table_rows({
+            json: true,
+            code: this.contractAccount.account_name,   // contract who owns the table
+            scope: account_name,  // scope of the table
+            table: 'skills',
+            lower_bound: key,
+            limit: 1,
+        });
+
+        return resp.rows[0].skill;
+
+    }
+    async getSkills(account_name) {
+
+        const resp = await Eos.rpc.get_table_rows({
+            json: true,
+            code: this.contractAccount.account_name,   // contract who owns the table
+            scope: account_name,  // scope of the table
+            table: 'skills',
+            limit: 100,
+        });
+
+        return resp.rows.map(row => row.skill);
+
+    }
 
 }
 
