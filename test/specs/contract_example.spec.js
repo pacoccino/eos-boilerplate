@@ -1,4 +1,4 @@
-const Contract_example = require('../../js/contract_example');
+const Contract_example = require('../../lib/contract_example');
 
 describe('contract_example', () => {
 

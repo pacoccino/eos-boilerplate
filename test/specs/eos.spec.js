@@ -1,5 +1,5 @@
 const config = require('../../config');
-const EosSpec = require('../../js/eos');
+const EosSpec = require('../../lib/eos');
 
 describe('Eos', () => {
 
