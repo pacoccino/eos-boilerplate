@@ -10,7 +10,7 @@
     "eos:start-p": "docker-compose -f docker-compose.proxy.yml up -d nodeos keosd",
     "eos:stop": "docker-compose down",
     "cleos": "docker-compose run --rm cleos",
-    "eosiocpp": "docker-compose run --rm cdt",
+    "eosio-cpp": "docker-compose run --rm cdt",
     "account:create": "./eos/scripts/create_account.sh",
     "contract:deploy": "./eos/scripts/deploy_contract.sh",
     "setup:wallets": "./eos/scripts/setup_wallets.sh",

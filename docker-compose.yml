@@ -3,7 +3,7 @@ version: '3.2'
 services:
 
   nodeos:
-    image: eosio/eos-dev:v1.2.5
+    image: eosio/eos-dev:v1.4.2
     ports:
       - 8888:8888
     expose:

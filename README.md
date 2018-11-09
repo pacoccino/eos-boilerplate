@@ -1,6 +1,12 @@
-# EOS Hackathon project
+# EOS boilerplate
 
-This is a base dApp for a angular-based web application with a EOS blockchain backend.
+This repository contains all the necessary tools to setup an EOS dApp environment and also contains a small example smart contract.
+
+### Versions
+
+- eos: `eosio/eos-dev:v1.4.2`
+- eos.cdt: `1.3.2`
+- eosjs: `20.0.0-beta2`
 
 ## EOS node commands
 
@@ -18,13 +24,32 @@ yarn eos:stop
 
 The persistent data is stored in `eos/data` and `eos/wallets`, for the blockchain and the wallet, respectively.
 
+### Automated reboot
+
+This command will setup all the environment. This is very useful when the code of the smart contract is changed and that we want to redeploy everything. 
+
+It starts nodes, create default accounts, deploy contracts and tokens.
+ 
+*Attention, this command destroy all the local environment (accounts, deployed contracts and data)*
+```sh
+yarn restart
+```
+
 ### Tools
 
-You can use **cleos** and **eosiocpp** through yarn.
+You can use **cleos** and **eosio-cpp** through yarn.
  
 ```sh
 yarn cleos wallet list
-yarn eosiocpp -n contracts/example
+yarn eosio-cpp  -abigen /opt/eosio/bin/contracts/example/example.cpp -o /opt/eosio/bin/contracts/example/example.wasm --contract example
+```
+
+### Test
+ 
+This will restarts the environment and run automated tests.
+
+```sh
+yarn test
 ```
 
 
@@ -73,9 +98,9 @@ yarn cleos wallet unlock -n eosiomain
 ```
 # create a new contract
 
-yarn eosiocpp -n contracts/hello
-yarn eosiocpp -o /opt/eosio/bin/contracts/hello/hello.wast  /opt/eosio/bin/contracts/hello/hello.cpp
-yarn eosiocpp -g /opt/eosio/bin/contracts/hello/hello.abi  /opt/eosio/bin/contracts/hello/hello.cpp
+yarn eosio-cpp -n contracts/hello
+yarn eosio-cpp -o /opt/eosio/bin/contracts/hello/hello.wast  /opt/eosio/bin/contracts/hello/hello.cpp
+yarn eosio-cpp -g /opt/eosio/bin/contracts/hello/hello.abi  /opt/eosio/bin/contracts/hello/hello.cpp
 yarn cleos set contract hi /opt/eosio/bin/contracts/hello --permission testacc@active     
 yarn cleos push action testacc hi '["testacc"]' -p testacc@active
 ```
