@@ -73,4 +73,14 @@ describe('contract_example', () => {
 
     });
 
+    it('delete profile', async () => {
+
+        await this.contract.setProfile(this.charlyAccount, 'IRLCharly');
+        await this.contract.deleteProfile(this.charlyAccount.account_name);
+
+        const profileCharly = await this.contract.getProfile('charly');
+        expect(profileCharly).not.to.exist;
+
+    });
+
 });

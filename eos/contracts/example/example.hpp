@@ -18,6 +18,7 @@ CONTRACT example : public eosio::contract {
 
      ACTION setprofile(name user, std::string firstName);
      ACTION addskill(name user, std::string skill);
+     ACTION rmprofile(name user);
 
   private:
 

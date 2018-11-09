@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const configs = {
     'EOS_ENDPOINT': 'http://localhost:8888',
-    'EOS_PKS': '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3',
+    'EOS_PKS': '5JKU9mEsvNEzQ7MsGMB8yqVsCXCPhvwiwwt6HgZmJRJGViucVT8',
 };
 
 const config = Object.keys(configs)

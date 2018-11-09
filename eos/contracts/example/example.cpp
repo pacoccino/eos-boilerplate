@@ -32,7 +32,7 @@ ACTION example::setprofile(name user, std::string firstName) {
 Add a skill for a user.
 
     Here the skills are stored on the user scope. Each user can have multiple skills.
-    The user must have set a firstName first
+    The user must have set a firstName beforehand
 */
 ACTION example::addskill(name user, std::string skill) {
 
@@ -64,17 +64,21 @@ ACTION example::addskill(name user, std::string skill) {
 Remove a user.
     Only contract owner can do this.
 */
-/*
 ACTION example::rmprofile(name user) {
 
     require_auth( _self );
     require_recipient( user ); // is_account ??
 
-    // TODO
+    auto existing_profile = _profiles.find( user.value );
+
+    eosio_assert(existing_profile != _profiles.end(), "Profile does not exist");
+
+    _profiles.erase(existing_profile);
 
 }
 
+/*
 transfer token
-
 */
-EOSIO_DISPATCH( example, (setprofile)(addskill) )
+
+EOSIO_DISPATCH( example, (setprofile)(addskill)(rmprofile) )
