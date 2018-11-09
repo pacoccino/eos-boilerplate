@@ -14,13 +14,11 @@ CONTRACT spitfire : public eosio::contract {
 
      spitfire( name self, name code, datastream<const char*> ds ):
                 contract( self, code, ds ),
-                _ads( self, self.value ),
-                _kws( self, self.value ),
                 _profiles( self, self.value ) {}
 
-     void createad(name user, uint32_t product_id, eosio::asset reward);
-     void addkw(name user, std::string kw);
-     void setprofile(name user, bool notif);
+     ACTION createad(name user, uint32_t product_id, eosio::asset reward);
+     ACTION addkw(name user, std::string kw);
+     ACTION setprofile(name user, bool notif);
 
   private:
 
@@ -35,8 +33,6 @@ CONTRACT spitfire : public eosio::contract {
     };
     typedef eosio::multi_index< name("ads"), adstruct > ads_table;
 
-    ads_table _ads;
-
     TABLE kwstruct {
         uint64_t      key;
         std::string   kw;
@@ -45,7 +41,6 @@ CONTRACT spitfire : public eosio::contract {
     };
     typedef eosio::multi_index< name("kws"), kwstruct > kws_table;
 
-    kws_table _kws;
 
     TABLE profilestruct {
         name      user;

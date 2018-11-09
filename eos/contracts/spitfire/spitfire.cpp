@@ -5,7 +5,7 @@ ACTION spitfire::createad(name user, uint32_t product_id, eosio::asset reward) {
     require_auth( _self );
     require_recipient( user );
 
-    //ads_table ads( _self, user );
+    ads_table ads( _self, user.value );
 
     auto existing_profile = _profiles.find( user.value );
     eosio_assert( existing_profile != _profiles.end(), "profile doesnt exist" );
@@ -13,8 +13,8 @@ ACTION spitfire::createad(name user, uint32_t product_id, eosio::asset reward) {
     const auto& prof = *existing_profile;
     eosio_assert( prof.notif == true, "profile doesnt accept notifications" );
 
-    _ads.emplace( _self, [&]( auto& rcrd ) {
-        rcrd.key         = _ads.available_primary_key();
+    ads.emplace( _self, [&]( auto& rcrd ) {
+        rcrd.key         = ads.available_primary_key();
         rcrd.user        = user;
         rcrd.product_id  = product_id;
         rcrd.reward      = reward;
@@ -28,14 +28,17 @@ ACTION spitfire::addkw(name user, std::string kw) {
 
     require_auth( user );
 
-    _kws.emplace( _self, [&]( auto& rcrd ) {
-       rcrd.key   = _kws.available_primary_key();
+    kws_table kws( _self, user.value );
+
+    kws.emplace( _self, [&]( auto& rcrd ) {
+       rcrd.key   = kws.available_primary_key();
        rcrd.kw    = kw;
     });
 
 }
 
-ACTION spitfire::setprofile(name user, bool notif) {
+[[ eosio::action("setprofile") ]]
+void spitfire::setprofile(name user, bool notif) {
 
     require_auth( user );
 
