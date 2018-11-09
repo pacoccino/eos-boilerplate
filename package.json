@@ -1,8 +1,8 @@
 {
-  "name": "eos-base-app",
+  "name": "eos-boilerplate",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:amontech/eos-base-app.git",
+  "repository": "git@github.com:pakokrew/eos-boilerplate.git",
   "author": "Pacien Boisson <pakokrew@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -14,8 +14,8 @@
     "account:create": "./eos/scripts/create_account.sh",
     "contract:deploy": "./eos/scripts/deploy_contract.sh",
     "setup:wallets": "./eos/scripts/setup_wallets.sh",
-    "setup:spitfire": "./eos/scripts/setup_spitfire.sh",
-    "restart": "yarn eos:stop && rm -rf ./eos/data ./eos/wallets ./eos/work && yarn eos:start && ./eos/scripts/setup_wallets.sh && ./eos/scripts/setup_spitfire.sh",
+    "setup:contract": "./eos/scripts/setup_contract.sh",
+    "restart": "yarn eos:stop && rm -rf ./eos/data ./eos/wallets ./eos/work && yarn eos:start && ./eos/scripts/setup_wallets.sh && ./eos/scripts/setup_contract.sh",
     "test": "yarn restart && mocha -R spec ./test/test.config.js ./test/specs --recursive"
   },
   "devDependencies": {

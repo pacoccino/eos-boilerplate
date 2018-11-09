@@ -1,11 +1,11 @@
 const config = require('../../config');
-const Eos = require('../../js/eos');
+const EosSpec = require('../../js/eos');
 
 describe('Eos', () => {
 
     it('eos', () => {
 
-        const { getApi, adminApi, rpc } = Eos;
+        const { getApi, adminApi, rpc } = EosSpec;
 
         expect(adminApi.rpc).to.eq(rpc);
         expect(rpc.endpoint).to.eq(config.EOS_ENDPOINT);
@@ -21,7 +21,7 @@ describe('Eos', () => {
 
     it.skip('create account', async () => {
 
-        const account = await Eos.createAccount('bob');
+        const account = await EosSpec.createAccount('bob');
 
         expect(account.account_name).to.eq('bob');
         expect(account.keys.privateKey).to.exist;

@@ -2,13 +2,13 @@ set -o errexit
 
 if [ -z "$1" ]
 then
-  echo "please give arguments: contractname owner"
+  echo "usage: ./deploy_contract.sh contractname owner"
   exit
 fi
 
 if [ -z "$2" ]
 then
-  echo "please give arguments: contractname owner"
+  echo "usage: ./deploy_contract.sh contractname owner"
   exit
 fi
 
