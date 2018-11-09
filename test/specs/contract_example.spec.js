@@ -3,7 +3,7 @@ const Contract_example = require('../../lib/contract_example');
 describe('contract_example', () => {
 
     before(() => {
-        this.contract = new Contract_example('example', '5JcY3wrbDZqLDX5fcbd46S1iyUrtx6SfSyPtkJxPiDANaBYHskH');
+        this.contract = new Contract_example('example', '5JKU9mEsvNEzQ7MsGMB8yqVsCXCPhvwiwwt6HgZmJRJGViucVT8');
         this.aliceAccount = {
             account_name: 'alice',
             privateKey: '5Kcu8cbdyjTXD5e1QsRLmX6JYqGMC9mSRsFgDwKPk48j4MmPyBW',
@@ -21,7 +21,7 @@ describe('contract_example', () => {
     it('instance', () => {
 
         expect(this.contract.contractAccount.account_name).to.eq('example');
-        expect(this.contract.contractAccount.keys.privateKey).to.eq('5JcY3wrbDZqLDX5fcbd46S1iyUrtx6SfSyPtkJxPiDANaBYHskH');
+        expect(this.contract.contractAccount.privateKey).to.eq('5JKU9mEsvNEzQ7MsGMB8yqVsCXCPhvwiwwt6HgZmJRJGViucVT8');
 
     });
 

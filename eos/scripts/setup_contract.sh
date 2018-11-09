@@ -25,3 +25,5 @@ yarn contract:deploy "$CONTRACT_NAME" "$CONTRACT_ACCOUNT"
 
 yarn cleos push action eosio.token create '{"issuer":"eosio", "maximum_supply":"1000000000.0000 '"$TOKEN_SYMBOL"'"}' -p eosio.token@active
 yarn cleos push action eosio.token issue '[ "'"$CONTRACT_ACCOUNT"'", "1000000000.0000 '"$TOKEN_SYMBOL"'", "" ]' -p eosio
+
+#yarn cleos set account permission example active '{"threshold": 1,"keys": [{"key": "EOS8YtHXqYuAvFSGbkSYzxWuRPXPLeWVsjRLEjw1fgQAMYjvLZ66p","weight": 1}], "accounts": [{"permission":{"actor":"example","permission":"eosio.code"},"weight":1}]}' -p example@owner

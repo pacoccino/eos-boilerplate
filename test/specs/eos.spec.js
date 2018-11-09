@@ -3,7 +3,7 @@ const EosSpec = require('../../lib/eos');
 
 describe('Eos', () => {
 
-    it('eos', () => {
+    it('get api', () => {
 
         const { getApi, adminApi, rpc } = EosSpec;
 
@@ -15,7 +15,7 @@ describe('Eos', () => {
 
         const signedApi = getApi([config.EOS_PKS]);
         expect(signedApi.signatureProvider).to.exist;
-        expect(signedApi.signatureProvider.availableKeys[0]).to.eq('PUB_K1_6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5BoDq63');
+        expect(signedApi.signatureProvider.availableKeys[0]).to.eq('PUB_K1_8YtHXqYuAvFSGbkSYzxWuRPXPLeWVsjRLEjw1fgQAMYjvZub3c');
 
     });
 
@@ -28,5 +28,7 @@ describe('Eos', () => {
         expect(account.keys.publicKey).to.exist;
 
     });
+
+    // TODO test transaction & getTableRows
 
 });
