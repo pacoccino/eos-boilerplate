@@ -5,7 +5,7 @@ Sets the firstName of a user. Adds or edit the existing one.
 
     The profiles are stored in the contract scope. Only one instance of profile per user.
 */
-ACTION example::setprofile(name user, std::string firstName) {
+ACTION example::setprofile(name user, std::string firstName, uint64_t age) {
 
     require_auth( user );
 
@@ -15,6 +15,7 @@ ACTION example::setprofile(name user, std::string firstName) {
 
       _profiles.modify( existing_profile, _self, [&]( auto& rcrd ) {
          rcrd.firstName = firstName;
+         rcrd.age = age;
       });
 
     } else {
@@ -22,9 +23,12 @@ ACTION example::setprofile(name user, std::string firstName) {
       _profiles.emplace( _self, [&]( auto& rcrd ) {
          rcrd.user      = user;
          rcrd.firstName = firstName;
+         rcrd.age = age;
       });
 
     }
+
+    send_summary(user, " successfully set profile");
 
 }
 
@@ -58,6 +62,9 @@ ACTION example::addskill(name user, std::string skill) {
         });
 
     }
+
+    send_summary(user, " successfully added skill");
+
 }
 
 /*
@@ -75,10 +82,23 @@ ACTION example::rmprofile(name user) {
 
     _profiles.erase(existing_profile);
 
+    send_summary(user, " successfully deleted profile");
+
 }
 
-/*
-transfer token
-*/
+ACTION example::notify(name user, std::string msg) {
+    require_auth(get_self());
+    require_recipient(user);
+}
 
-EOSIO_DISPATCH( example, (setprofile)(addskill)(rmprofile) )
+
+void example::send_summary(name user, std::string message) {
+    action(
+      permission_level{get_self(),"active"_n},
+      get_self(),
+      "notify"_n,
+      std::make_tuple(user, name{user}.to_string() + message)
+    ).send();
+};
+
+EOSIO_DISPATCH( example, (setprofile)(addskill)(rmprofile)(notify) )

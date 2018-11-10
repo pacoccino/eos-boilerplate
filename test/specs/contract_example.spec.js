@@ -30,9 +30,9 @@ describe('contract_example', () => {
         const profile = await this.contract.getProfile('unknown');
         expect(profile).not.to.exist;
 
-        await this.contract.setProfile(this.aliceAccount, 'IRLAlice');
-        await this.contract.setProfile(this.bobAccount, 'IRLBob');
-        await this.contract.setProfile(this.charlyAccount, 'IRLCharly');
+        await this.contract.setProfile(this.aliceAccount, { firstName: 'IRLAlice', age: 21 });
+        await this.contract.setProfile(this.bobAccount, { firstName: 'IRLBob', age: 22 });
+        await this.contract.setProfile(this.charlyAccount, { firstName: 'IRLCharly', age: 23 });
 
         const profileAlice = await this.contract.getProfile('alice');
         expect(profileAlice.user).to.eq('alice');
@@ -45,6 +45,17 @@ describe('contract_example', () => {
         const profileCharly = await this.contract.getProfile('charly');
         expect(profileCharly.user).to.eq('charly');
         expect(profileCharly.firstName).to.eq('IRLCharly');
+
+    });
+
+    it.skip('get by secondary key', async () => {
+
+        await this.contract.setProfile(this.aliceAccount, { firstName: 'IRLAlice', age: 21 });
+        await this.contract.setProfile(this.bobAccount, { firstName: 'IRLBob', age: 22 });
+        await this.contract.setProfile(this.charlyAccount, { firstName: 'IRLCharly', age: 23 });
+
+        const profileBobeAge = await this.contract.getProfileByAge(22);
+        expect(profileBobeAge.user).to.eq('bob');
 
     });
 
@@ -75,7 +86,7 @@ describe('contract_example', () => {
 
     it('delete profile', async () => {
 
-        await this.contract.setProfile(this.charlyAccount, 'IRLCharly');
+        await this.contract.setProfile(this.charlyAccount, { firstName: 'IRLCharly', age: 21 });
         await this.contract.deleteProfile(this.charlyAccount.account_name);
 
         const profileCharly = await this.contract.getProfile('charly');

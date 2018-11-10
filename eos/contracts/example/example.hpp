@@ -16,19 +16,27 @@ CONTRACT example : public eosio::contract {
                 contract( self, code, ds ),
                 _profiles( self, self.value ) {}
 
-     ACTION setprofile(name user, std::string firstName);
+     ACTION setprofile(name user, std::string firstName, uint64_t age);
      ACTION addskill(name user, std::string skill);
      ACTION rmprofile(name user);
+     ACTION notify(name user, std::string msg);
 
   private:
+
+    void send_summary(name user, std::string message);
 
     TABLE profilestruct {
         name         user;
         std::string  firstName;
+        uint64_t     age;
 
+        // primary key
         auto primary_key() const { return user.value; }
+
+        // secondary key, only supports uint64_t, uint128_t, uint256_t, double or long double
+        uint64_t get_by_age() const { return age; }
     };
-    typedef eosio::multi_index< name("profiles"), profilestruct > profiles_table;
+    typedef eosio::multi_index< name("profiles"), profilestruct, indexed_by< name("getbyage"), const_mem_fun<profilestruct, uint64_t, &profilestruct::get_by_age>> > profiles_table;
 
     TABLE skills_struct {
         uint64_t      key;
