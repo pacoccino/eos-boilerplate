@@ -54,7 +54,7 @@ describe('contract_example', () => {
         await this.contract.setProfile(this.bobAccount, { firstName: 'IRLBob', age: 22 });
         await this.contract.setProfile(this.charlyAccount, { firstName: 'IRLCharly', age: 23 });
 
-        const profileBobeAge = await this.contract.getProfileByAge(22);
+        const profileBobeAge = await this.contract.getProfileByAge('22');
         expect(profileBobeAge.user).to.eq('bob');
 
     });
