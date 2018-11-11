@@ -29,5 +29,8 @@ yarn cleos create account eosio charly EOS6EeXqdYC7jmuATwjfY5Lx1RpAYc533xGispe39
 yarn account:create eosio.token
 yarn cleos set contract eosio.token /contracts/eosio.token -p eosio.token
 
+yarn cleos push action eosio.token create '{"issuer":"eosio", "maximum_supply":"1000000000.0000 EOS"}' -p eosio.token@active
+yarn cleos push action eosio.token issue '[ "alice", "100.0000 EOS", "memo" ]' -p eosio
+
 #yarn account:create eosio.system
 #yarn cleos set contract eosio.system /contracts/eosio.system -p eosio.system
